@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>Con Mắt Tiên Tri Của Thần Ra</title>
+    <title>1231 Con Mắt Tiên Tri Của Thần Ra</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,15 +18,11 @@
             background-size: cover;
             color: var(--sand); font-family: 'Roboto', sans-serif;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow: hidden; /* Chặn cuộn trang */
-            touch-action: none; /* Chặn vuốt trượt mặc định trên mobile */
+            overflow: hidden; touch-action: none;
         }
         
-        #particles-js {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none;
-        }
+        #particles-js { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none; }
 
-        /* Hiệu ứng chớp lóa màn hình (Flash bang) */
         #flash-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #fff; z-index: 9999; opacity: 0; pointer-events: none;
@@ -40,13 +36,13 @@
             backdrop-filter: blur(10px); text-align: center;
         }
 
-        h1 { font-family: 'Cormorant SC', serif; color: var(--gold); font-size: clamp(2rem, 6vw, 3.5rem); margin: 0; text-shadow: 0 0 15px var(--gold); }
-        p { font-size: 1.2rem; line-height: 1.6; margin: 15px 0; }
+        h1 { font-family: 'Cormorant SC', serif; color: var(--gold); font-size: clamp(2rem, 6vw, 3.5rem); margin: 0; text-shadow: 0 0 15px var(--gold); user-select: none; cursor: pointer;}
+        h2 { font-family: 'Cormorant SC', serif; color: var(--gold); font-size: 1.5rem; margin: 10px 0; }
+        p { font-size: 1.1rem; line-height: 1.6; margin: 15px 0; }
         
         .stage { display: none; opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
         .stage.visible { display: block; opacity: 1; transform: translateY(0); }
 
-        /* Nút bấm */
         .btn {
             font-family: 'Roboto', sans-serif; font-size: 1.2rem; padding: 12px 30px; margin-top: 20px;
             border: none; border-radius: 50px; background: linear-gradient(135deg, #b8860b, #ffd700);
@@ -54,8 +50,8 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: all 0.3s;
         }
         .btn:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255,215,0,0.5); }
+        .btn:disabled { background: #555; color: #888; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* Ô nhập liệu */
         .input-box {
             width: 90%; max-width: 500px; padding: 15px; font-size: 1.2rem;
             background: rgba(0,0,0,0.5); border: 2px solid #555; color: var(--gold);
@@ -63,36 +59,53 @@
             font-family: 'Roboto', sans-serif;
         }
         .input-box:focus { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); }
-        
         .error-msg { color: #ff4d4d; font-style: italic; font-size: 1rem; margin-top: 10px; min-height: 20px; }
 
-        /* Animation Rung lắc khi lỗi */
-        @keyframes shakeError {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-        }
+        @keyframes shakeError { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 50% { transform: translateX(10px); } 75% { transform: translateX(-10px); } }
         .shake { animation: shakeError 0.4s ease-in-out; border-color: #ff4d4d !important; box-shadow: 0 0 15px #ff4d4d !important; }
 
-        /* Con mắt ma thuật (Slide 3) */
+        .grid-3x3 {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 350px; margin: 20px auto;
+        }
+        .grid-item {
+            font-size: 3rem; color: #555; background: rgba(0,0,0,0.6); border: 2px solid #333;
+            border-radius: 15px; padding: 15px 0; cursor: pointer; transition: all 0.3s; user-select: none;
+        }
+        .grid-item.selected {
+            color: var(--gold); border-color: var(--gold); box-shadow: 0 0 15px var(--gold) inset; text-shadow: 0 0 10px var(--gold); transform: scale(1.1);
+        }
+        #btnConfirmSymbols { display: none; }
+
+        .orb-wrapper { position: relative; width: 250px; height: 250px; margin: 30px auto; display: flex; align-items: center; justify-content: center; }
         .magic-orb {
-            width: 150px; height: 150px; margin: 30px auto; border-radius: 50%;
-            background: radial-gradient(circle, #2a2a15 0%, #000 80%);
-            border: 3px solid var(--gold);
-            box-shadow: 0 0 20px var(--gold), inset 0 0 30px var(--gold);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 5rem; color: var(--gold); cursor: grab; user-select: none;
-            transition: box-shadow 0.1s, transform 0.1s;
-            position: relative;
+            width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, #2a2a15 0%, #000 80%);
+            border: 3px solid var(--gold); box-shadow: 0 0 20px var(--gold), inset 0 0 30px var(--gold);
+            display: flex; align-items: center; justify-content: center; font-size: 5rem; color: var(--gold);
+            cursor: grab; user-select: none; transition: box-shadow 0.1s, transform 0.1s; z-index: 10;
+        }
+        .orbit-ring {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            animation: spinRing 10s linear infinite; pointer-events: none;
+        }
+        .orbit-symbol {
+            position: absolute; font-size: 2.5rem; color: var(--gold); text-shadow: 0 0 10px var(--gold);
+            width: 40px; height: 40px; text-align: center; line-height: 40px;
+            top: 50%; left: 50%; margin-top: -20px; margin-left: -20px;
         }
         .orb-instruction { font-size: 1.1rem; color: #aaa; animation: pulseText 2s infinite; }
-
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
         @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; text-shadow: 0 0 10px #fff;} }
 
-        /* Kết quả (Slide 4) */
-        .question-echo { font-size: 1.2rem; color: #aaa; font-style: italic; margin-bottom: 20px; }
-        .final-answer { font-family: 'Cormorant SC', serif; font-size: 2.5rem; color: var(--gold); text-shadow: 0 0 20px var(--gold); margin: 20px 0; }
+        .question-echo { font-size: 1.3rem; color: #aaa; font-style: italic; margin-bottom: 30px; }
+        .final-answer {
+            font-family: 'Cormorant SC', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--gold);
+            text-shadow: 0 0 20px var(--gold); margin: 20px 0; font-weight: bold; line-height: 1.4; opacity: 0;
+        }
+        .cinematic-reveal { animation: blurReveal 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        @keyframes blurReveal {
+            0% { filter: blur(20px); letter-spacing: 15px; opacity: 0; transform: scale(1.2); }
+            100% { filter: blur(0); letter-spacing: normal; opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -101,80 +114,127 @@
 <div id="flash-overlay"></div>
 
 <div class="container">
-    <!-- SLIDE 1: GIỚI THIỆU -->
     <div id="stage-1" class="stage visible">
-        <h1>Con Mắt Tiên Tri</h1>
+        <h1 id="secretTitle">Con Mắt Tiên Tri</h1>
         <h2>Của Thần Ra</h2>
-        <p>Không có bí mật nào có thể che giấu dưới ánh sáng của Thần Mặt Trời.<br>Bạn đã sẵn sàng đối mặt với sự thật chưa?</p>
-        <button class="btn" onclick="initRitual()">Khai mở tâm trí</button>
+        <p>Không có bí mật nào có thể che giấu dưới ánh sáng của Thần Mặt Trời.<br>Mỗi ngày các vị thần chỉ ban 3 lời sấm truyền.</p>
+        <p style="color: #aaa; font-size: 0.9rem;" id="dailyStatus">Lượt hỏi hôm nay: 0/3</p>
+        <button class="btn" id="btnStart" onclick="initRitual()">Khai mở tâm trí</button>
     </div>
 
-    <!-- SLIDE 2: NHẬP CÂU HỎI -->
     <div id="stage-2" class="stage">
-        <h1>Viết Lời Thỉnh Cầu</h1>
+        <h2>Viết Lời Thỉnh Cầu</h2>
         <p>Hãy hỏi một câu hỏi mà các vị thần có thể trả lời bằng <strong>CÓ</strong> hoặc <strong>KHÔNG</strong>.</p>
         <input type="text" id="userQuestion" class="input-box" placeholder="Ví dụ: Tương lai tôi có giàu không?">
         <div id="errorText" class="error-msg"></div>
         <button class="btn" onclick="validateQuestion()">Hỏi các vị thần</button>
     </div>
 
-    <!-- SLIDE 3: TƯƠNG TÁC (CỌ XÁT / LẮC) -->
     <div id="stage-3" class="stage">
-        <h1>Hội Tụ Năng Lượng</h1>
-        <div class="magic-orb" id="orb">𓂀</div>
+        <h2>Thông Linh Năng Lượng</h2>
+        <p>Hãy chọn 3 biểu tượng khi bạn nghĩ đến câu hỏi này.</p>
+        <div class="grid-3x3" id="symbolGrid"></div>
+        <button class="btn" id="btnConfirmSymbols" onclick="goToOrbPhase()">Gửi lên thần linh</button>
+    </div>
+
+    <div id="stage-4" class="stage">
+        <h2>Hội Tụ Năng Lượng</h2>
+        <div class="orb-wrapper">
+            <div class="orbit-ring" id="orbitRing"></div>
+            <div class="magic-orb" id="orb">𓂀</div>
+        </div>
         <p class="orb-instruction">Hãy dùng tay cọ xát liên tục vào con mắt<br>hoặc <strong>lắc mạnh điện thoại</strong> của bạn!</p>
     </div>
 
-    <!-- SLIDE 4: KẾT QUẢ -->
-    <div id="stage-4" class="stage">
-        <h1>Lời Sấm Truyền</h1>
+    <div id="stage-5" class="stage">
+        <h2>Lời Sấm Truyền</h2>
         <div class="question-echo" id="echoText">"..."</div>
         <div class="final-answer" id="answerText">Đang đọc tâm trí...</div>
         <button class="btn" onclick="resetRitual()">Hỏi câu khác</button>
     </div>
 </div>
 
-<!-- Âm thanh -->
-<audio id="windAudio" preload="auto" loop><source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2d8d9d8e0a.mp3?filename=desert-wind-ambient-loop-162996.mp3" type="audio/mpeg"></audio>
-<audio id="chargeAudio" preload="auto" loop><source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3316e6ba68.mp3?filename=earthquake-rumble-and-crack-11449.mp3" type="audio/mpeg"></audio>
-<audio id="boomAudio" preload="auto"><source src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_82c219cb8c.mp3?filename=epic-impact-logo-2-96542.mp3" type="audio/mpeg"></audio>
+<audio id="windAudio" preload="auto" loop><source src="https://files.catbox.moe/cwghfl" type="audio/mpeg"></audio>
+<audio id="chargeAudio" preload="auto" loop><source src="https://files.catbox.moe/hewudh" type="audio/mpeg"></audio>
+<audio id="boomAudio" preload="auto"><source src="https://files.catbox.moe/6cnm50.mp3" type="audio/mpeg"></audio>
+<audio id="bellAudio" preload="auto"><source src="https://files.catbox.moe/5ctf8c.mp3" type="audio/mpeg"></audio>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    // --- KHỞI TẠO BỤI MA THUẬT MẶC ĐỊNH ---
     particlesJS("particles-js", {
         "particles": {
-            "number": { "value": 50 },
-            "color": { "value": "#ffd700" },
-            "shape": { "type": "circle" },
-            "opacity": { "value": 0.5, "random": true },
-            "size": { "value": 3, "random": true },
-            "line_linked": { "enable": false },
+            "number": { "value": 50 }, "color": { "value": "#ffd700" },
+            "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true },
+            "size": { "value": 3, "random": true }, "line_linked": { "enable": false },
             "move": { "enable": true, "speed": 1, "direction": "top", "random": true, "out_mode": "out" }
         }
     });
 
-    // --- CƠ SỞ DỮ LIỆU CÂU TRẢ LỜI ---
+    const nineSymbols =["𓅭", "𓆣", "𓇳", "𓅃", "𓄤", "𓆙", "𓍝", "𓊹", "𓄂"];
+
     const answers = {
-        love:["Sợi chỉ đỏ đã được buộc chặt.", "Trái tim bạn đã biết rõ câu trả lời.", "Tình yêu này cần vượt qua một thử thách lớn.", "Đừng mù quáng, hãy để lý trí dẫn đường.", "Các vì sao báo hiệu một mối lương duyên."],
-        money:["Kho báu vĩ đại đang chờ bạn phía trước.", "Thần Tài không mỉm cười trong sự việc này.", "Hãy cẩn trọng, lòng tham sẽ nuốt chửng bạn.", "Sự thịnh vượng sẽ đến nếu bạn kiên nhẫn.", "Túi vàng sẽ sớm vơi đi, hãy bảo vệ nó."],
-        action:["Hãy tiến lên, các vị thần đang hậu thuẫn bạn!", "Chưa phải lúc, hãy lùi lại một bước.", "Làm ngay đi trước khi cơ hội vụt mất.", "Suy nghĩ thật kỹ, con đường này đầy chông gai."],
-        general:["Chắc chắn là như vậy.", "Đừng hy vọng hão huyền.", "Tương lai mờ mịt, hãy thử lại sau.", "Các vì sao đã nói: CÓ.", "Nguồn tin từ cõi âm báo là: KHÔNG.", "Câu trả lời đã quá rõ ràng.", "Rất đáng ngờ, hãy cẩn thận."]
+        study:["Thần Trí Tuệ Thoth đang mỉm cười với bài thi của con.", "Ánh sáng rực rỡ từ ngọn đuốc của Nữ thần Athena sẽ dẫn lối cho con.", "Thần Ra ban tặng tia nắng của sự thông suốt vào tâm trí con.", "Con đã nhận được lời chúc phúc từ các nàng Muse, tài năng sẽ thăng hoa.", "Sự kiên trì của con đã lay động lòng thành của các vị thần, thành công đang đến.", "Quyền năng của Hermes sẽ giúp tư duy của con trở nên nhạy bén vô song.", "Con sẽ vượt qua kỳ thi này dễ dàng như cách Apollo điều khiển cỗ xe mặt trời.", "Đền thờ tri thức đang rộng mở đón bước chân chiến thắng của con.", "Các vị thần đang quan sát sự nỗ lực của con, hãy kiên nhẫn.", "Tương lai vẫn còn mờ ảo trong làn sương của nữ thần Isis, hãy hỏi lại sau.", "Cán cân của thần Maat đang thăng bằng, kết quả nằm ở sự tự giác của con.", "Các vị thần cần thấy thêm sự quyết tâm từ phía con trước khi đưa ra lời đáp.", "Tâm hồn con đang xao nhãng, hãy tập trung trở lại trước khi quá muộn.", "Thần Anubis nhắc nhở con cần đặt tâm huyết nặng hơn vào trang sách.", "Cơn thịnh nộ của Poseidon sẽ nổi lên nếu con tiếp tục chủ quan với việc học.", "Kết quả đang ở ranh giới. Chăm chỉ hơn chút nữa sẽ đỗ.", "Các vì sao nói rằng: Phép màu không tự nhiên sinh ra, hãy tự nỗ lực."],
+        love:["Mũi tên vàng của thần Eros đã nhắm trúng, trái tim ấy đang hướng về con.", "Nữ thần Aphrodite ban phước cho tình cảm chân thành, một khởi đầu đẹp đang đến.", "Các vì sao báo hiệu một mối lương duyên rực rỡ như ánh bình minh trên đỉnh Olympus.", "Sợi chỉ đỏ của định mệnh đã được buộc chặt, sự chân thành sẽ được đền đáp.", "Trái tim con đã biết rõ câu trả lời, hãy lắng nghe nhịp đập của chính mình.", "Thần Cupid đang mỉm cười nhưng chưa giương cung, hãy kiên nhẫn chờ đợi thêm.", "Làn khói từ đền Delphi còn mờ ảo, tình cảm này cần thêm thời gian để minh chứng.", "Các vị thần đang thử thách lòng kiên trì của con trước khi ban tặng nhân duyên.", "Tình yêu này cần vượt qua một thử thách lớn, hãy chuẩn bị tâm thế vững vàng.", "Đừng để những xúc cảm nhất thời làm mờ mắt, hãy để lý trí dẫn đường như nữ thần Athena.", "Cánh cửa trái tim đang khép hờ, con cần tập trung vào bản thân trước khi tìm kiếm sự gắn kết."],
+        money:["Kho báu vĩ đại của các Pharaoh đang chờ đợi con ở phía trước.", "Thần Hermes đang mang đến những cơ hội giao thương đầy hứa hẹn.", "Sự thịnh vượng sẽ đến nếu con kiên nhẫn gieo trồng tri thức từ hôm nay.", "Cỗ xe vàng của thần Helios đang soi sáng con đường tài lộc của con.", "Dòng sông Nile đang trỗi dậy, mang theo phù sa của sự giàu sang và sung túc.", "Cán cân của thần Maat đang xem xét sự nỗ lực của con, hãy cân nhắc kỹ.", "Đồng tiền vàng đang xoay giữa không trung, kết quả phụ thuộc vào quyết định sắp tới.", "Sự giàu có không chỉ nằm ở túi tiền, hãy tích lũy thêm giá trị cho bản thân.", "Làn sương mờ đang che khuất kho báu, hãy kiên nhẫn đợi thời cơ chín muồi.", "Hãy cẩn trọng, con quái vật của lòng tham có thể nuốt chửng thành quả của con.", "Thần Tài không mỉm cười trong sự việc này, hãy giữ chặt những gì đang có.", "Cánh cửa hầm vàng đang khép lại, con cần một kế hoạch khôn ngoan hơn."],
+        action:["Hãy tiến lên, các vị thần đang hậu thuẫn phía sau lưng con!", "Làm ngay đi trước khi cơ hội vụt mất khỏi tầm tay như gió thoảng.", "Cánh buồm của con đang thuận gió, hãy ra khơi để chinh phục đỉnh cao mới.", "Mọi dấu hiệu trên đỉnh Olympus đều cho thấy đây là thời điểm vàng để hành động.", "Con đã chuẩn bị đủ lâu rồi, hãy bước tới và khẳng định bản lĩnh của mình.", "Sự vội vàng có thể làm đổ vỡ chén thánh, hãy tĩnh tâm quan sát thêm.", "Cán cân đang ở trạng thái cân bằng, hành động hay dừng lại đều do con quyết định.", "Hãy tung đồng xu của thần Hermes, định mệnh đang chờ một sự ngẫu nhiên.", "Các vị thần chưa tiết lộ lối đi, hãy hỏi lại khi tâm trí con thanh thản hơn.", "Chưa phải lúc, hãy lùi lại một bước để nhìn rõ toàn cảnh bức tranh.", "Suy nghĩ thật kỹ, con đường này đầy chông gai và cạm bẫy.", "Linh tính từ đền thờ báo hiệu một sự bất an, hãy tạm dừng hành động này lại."],
+        general:["Chắc chắn là như vậy, các vị thần đã phê chuẩn lời cầu nguyện của con.", "Các vì sao trên bầu trời đêm đã hội tụ và nói: CÓ.", "Câu trả lời đã quá rõ ràng, hãy vững tin vào những gì con thấy.", "Mọi dấu hiệu đều chỉ về một kết quả viên mãn, con không cần phải lo âu.", "Định mệnh đã an bài một kết quả tốt đẹp nhất dành cho con.", "Ánh sáng từ đỉnh Olympus đang soi chiếu, sự thật là điều con mong đợi.", "Tương lai còn mờ mịt trong làn khói đền Delphi, hãy thử lại sau.", "Các vị thần chưa muốn tiết lộ thiên cơ vào lúc này.", "Tâm trí con chưa đủ tĩnh lặng để nhận lấy lời giải đáp, hãy quay lại sau.", "Câu trả lời đang nằm giữa ranh giới của ánh sáng và bóng tối.", "Đừng hy vọng hão huyền vào những điều không thuộc về mình.", "Dòng sông thời gian đang chảy ngược lại với mong muốn của con.", "Lời sấm truyền báo hiệu một sự thất vọng, hãy chuẩn bị tâm lý vững vàng."]
     };
 
-    // --- BIẾN TOÀN CỤC ---
     let currentQuestion = "";
+    let selectedIndices =[];
+    let trickResult = 0; 
     let chargeLevel = 0;
     let isCharging = false;
-    let chargeInterval;
+    let secretTapCount = 0;
+    let secretTapTimer;
 
+    // FIX LỖI: Lấy phần tử Flash ngay lập tức
+    const flashOverlay = document.getElementById('flash-overlay');
     const windAudio = document.getElementById('windAudio');
     const chargeAudio = document.getElementById('chargeAudio');
     const boomAudio = document.getElementById('boomAudio');
-    const flash = document.getElementById('flash-overlay');
+    const bellAudio = document.getElementById('bellAudio');
     const orb = document.getElementById('orb');
-    
-    // Hàm chuyển slide mượt
+    const orbitRing = document.getElementById('orbitRing');
+
+    function checkDailyLimit() {
+        const today = new Date().toDateString();
+        let usage = JSON.parse(localStorage.getItem('eyeOfRaUsage'));
+        if (!usage || usage.date !== today) {
+            usage = { date: today, count: 0 };
+            localStorage.setItem('eyeOfRaUsage', JSON.stringify(usage));
+        }
+        document.getElementById('dailyStatus').textContent = `Lượt hỏi hôm nay: ${usage.count}/3`;
+        if (usage.count >= 3) {
+            let btn = document.getElementById('btnStart');
+            btn.disabled = true;
+            btn.textContent = "Năng lượng cạn kiệt (Chờ ngày mai)";
+        }
+    }
+    checkDailyLimit();
+
+    document.getElementById('secretTitle').addEventListener('click', () => {
+        secretTapCount++;
+        clearTimeout(secretTapTimer);
+        secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1500); 
+        if (secretTapCount >= 5) {
+            localStorage.setItem('eyeOfRaUsage', JSON.stringify({ date: new Date().toDateString(), count: 0 }));
+            checkDailyLimit();
+            document.getElementById('btnStart').disabled = false;
+            document.getElementById('btnStart').textContent = "Khai mở tâm trí";
+            document.body.style.background = "radial-gradient(circle, #333, #000)";
+            setTimeout(() => { document.body.style.background = ""; }, 300); 
+            secretTapCount = 0;
+        }
+    });
+
+    function incrementDailyUsage() {
+        let usage = JSON.parse(localStorage.getItem('eyeOfRaUsage'));
+        if (!usage) usage = { date: new Date().toDateString(), count: 0 };
+        usage.count += 1;
+        localStorage.setItem('eyeOfRaUsage', JSON.stringify(usage));
+    }
+
     function switchStage(fromId, toId) {
         const fromEl = document.getElementById(fromId);
         const toEl = document.getElementById(toId);
@@ -186,170 +246,163 @@
         }, 600);
     }
 
-    // Nút Bắt Đầu (Slide 1)
     function initRitual() {
-        // Xin quyền âm thanh (bắt buộc do browser)
         windAudio.volume = 0.5; windAudio.play().catch(()=>{});
         chargeAudio.volume = 0; chargeAudio.play().catch(()=>{}); chargeAudio.pause();
         boomAudio.volume = 1; boomAudio.play().catch(()=>{}); boomAudio.pause();
+        bellAudio.volume = 1; bellAudio.play().catch(()=>{}); bellAudio.pause();
 
-        // Xin quyền cảm biến lắc (Riêng cho iOS 13+)
         if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
             DeviceMotionEvent.requestPermission().then(permissionState => {
                 if (permissionState === 'granted') window.addEventListener('devicemotion', handleShake);
             }).catch(console.error);
         } else {
-            window.addEventListener('devicemotion', handleShake); // Cho Android / Web cũ
+            window.addEventListener('devicemotion', handleShake);
         }
-
         switchStage('stage-1', 'stage-2');
     }
 
-    // Xử lý Validate Câu Hỏi (Slide 2)
     function validateQuestion() {
         const inputEl = document.getElementById('userQuestion');
         const errorEl = document.getElementById('errorText');
         let rawText = inputEl.value;
-        let cleanText = rawText.trim();
+        if (rawText.trim() === "") { inputEl.classList.add('shake'); errorEl.textContent = "Bạn chưa nhập lời thỉnh cầu!"; return; }
+        if (!rawText.includes('?')) { inputEl.classList.add('shake'); errorEl.textContent = "Con Mắt chỉ nhìn thấy 2 ngã rẽ. Hãy kết thúc bằng dấu chấm hỏi (?)."; return; }
+        currentQuestion = rawText;
+        incrementDailyUsage();
+        renderSymbols();
+        switchStage('stage-2', 'stage-3');
+    }
 
-        inputEl.classList.remove('shake');
-        errorEl.textContent = "";
+    function renderSymbols() {
+        const grid = document.getElementById('symbolGrid');
+        grid.innerHTML = ''; selectedIndices =[];
+        document.getElementById('btnConfirmSymbols').style.display = 'none';
+        nineSymbols.forEach((sym, index) => {
+            let div = document.createElement('div');
+            div.className = 'grid-item'; div.textContent = sym;
+            div.onclick = () => toggleSymbol(div, index);
+            grid.appendChild(div);
+        });
+    }
 
-        if (cleanText === "") {
-            inputEl.classList.add('shake');
-            errorEl.textContent = "Bạn chưa nhập lời thỉnh cầu!";
-            return;
+    function toggleSymbol(el, index) {
+        if (selectedIndices.includes(index)) {
+            selectedIndices = selectedIndices.filter(i => i !== index);
+            el.classList.remove('selected');
+        } else {
+            if (selectedIndices.length < 3) {
+                selectedIndices.push(index);
+                el.classList.add('selected');
+            }
         }
+        document.getElementById('btnConfirmSymbols').style.display = (selectedIndices.length === 3) ? 'inline-block' : 'none';
+    }
 
-        // BỘ LỌC THẦN LINH: Phải có dấu ? (Lưu ý: Không check cleanText để giữ mưu đồ ảo thuật)
-        if (!rawText.includes('?')) {
-            inputEl.classList.add('shake');
-            errorEl.textContent = "Con Mắt chỉ nhìn thấy 2 ngã rẽ. Hãy kết thúc bằng dấu chấm hỏi (?).";
-            return;
-        }
+    function goToOrbPhase() {
+        // --- LOGIC MÁNH KHÓE MỚI ---
+        const actualNums = selectedIndices.map(idx => idx + 1);
+        const lastPicked = actualNums[2];
+        const isAllEven = actualNums.every(n => n % 2 === 0);
+        const isAllOdd = actualNums.every(n => n % 2 !== 0);
 
-        currentQuestion = rawText; // Lưu lại câu hỏi thô
+        if (isAllEven && lastPicked === 2) trickResult = 1; // CHẴN + KẾT THÚC 2 => CÓ
+        else if (isAllOdd && lastPicked === 1) trickResult = -1; // LẺ + KẾT THÚC 1 => KHÔNG
+        else trickResult = 0;
+
+        orbitRing.innerHTML = '';
+        selectedIndices.forEach((idx, i) => {
+            let angle = i * 120; let sym = nineSymbols[idx];
+            let orbitDiv = document.createElement('div');
+            orbitDiv.className = 'orbit-symbol'; orbitDiv.textContent = sym;
+            orbitDiv.style.transform = `rotate(${angle}deg) translate(110px) rotate(-${angle}deg)`;
+            orbitRing.appendChild(orbitDiv);
+        });
         startChargingPhase();
     }
 
-    // Bắt đầu Tương Tác (Slide 3)
     function startChargingPhase() {
-        switchStage('stage-2', 'stage-3');
-        chargeLevel = 0;
-        isCharging = true;
+        switchStage('stage-3', 'stage-4');
+        chargeLevel = 0; isCharging = true;
         orb.style.transform = `scale(1)`;
-        orb.style.boxShadow = `0 0 20px var(--gold)`;
-        
-        chargeAudio.currentTime = 0;
-        chargeAudio.volume = 0.1;
-        chargeAudio.play().catch(()=>{});
-
-        // Thiết lập sự kiện vuốt/cọ xát
-        orb.addEventListener('touchmove', handleSwipe);
-        orb.addEventListener('mousemove', handleSwipe);
+        chargeAudio.currentTime = 0; chargeAudio.volume = 0.1; chargeAudio.play().catch(()=>{});
+        orb.addEventListener('touchstart', startChargeEvent);
+        orb.addEventListener('mousedown', startChargeEvent);
     }
 
-    // Xử lý Cọ xát bằng tay/chuột
-    function handleSwipe() {
-        if (isCharging) increaseCharge(1.5);
+    function startChargeEvent() { if (isCharging) {
+        document.addEventListener('touchmove', handleSwipe);
+        document.addEventListener('mousemove', handleSwipe);
+        document.addEventListener('touchend', stopChargeEvent);
+        document.addEventListener('mouseup', stopChargeEvent);
+    }}
+    function stopChargeEvent() {
+        document.removeEventListener('touchmove', handleSwipe);
+        document.removeEventListener('mousemove', handleSwipe);
     }
 
-    // Xử lý Lắc điện thoại
+    function handleSwipe() { if (isCharging) increaseCharge(0.7); }
     function handleShake(event) {
         if (!isCharging) return;
-        let acc = Math.abs(event.acceleration.x) + Math.abs(event.acceleration.y) + Math.abs(event.acceleration.z);
-        if (acc > 15) increaseCharge(5); // Nếu lắc mạnh, tăng điểm cực nhanh
+        let acc = Math.abs(event.acceleration.x || 0) + Math.abs(event.acceleration.y || 0) + Math.abs(event.acceleration.z || 0);
+        if (acc > 15) increaseCharge(3);
     }
 
-    // Hàm tăng năng lượng ma thuật
     function increaseCharge(amount) {
         chargeLevel += amount;
-        
-        // 1. Tăng hiệu ứng Glow và Scale cho quả cầu
         let scale = 1 + (chargeLevel / 300);
         let glow = 20 + chargeLevel;
         orb.style.transform = `scale(${scale})`;
         orb.style.boxShadow = `0 0 ${glow}px var(--gold), inset 0 0 ${glow/2}px var(--blood)`;
-        
-        // 2. Tăng âm thanh động đất
         chargeAudio.volume = Math.min(1, 0.1 + (chargeLevel / 100));
-
-        // 3. Tăng tốc độ bay của hạt bụi ma thuật (xoáy bão)
-        if (window.pJSDom && window.pJSDom[0]) {
-            let pjs = window.pJSDom[0].pJS;
-            pjs.particles.move.speed = 1 + (chargeLevel / 5);
-        }
-
-        // 4. Khi đạt đỉnh 100%
+        orbitRing.style.animationDuration = `${Math.max(1, 10 - (chargeLevel / 11))}s`;
+        if (window.pJSDom && window.pJSDom[0]) window.pJSDom[0].pJS.particles.move.speed = 1 + (chargeLevel / 10);
+        
         if (chargeLevel >= 100) {
             isCharging = false;
-            orb.removeEventListener('touchmove', handleSwipe);
-            orb.removeEventListener('mousemove', handleSwipe);
+            stopChargeEvent();
             triggerRevelation();
         }
     }
 
-    // Kích nổ kết quả (Slide 4)
     function triggerRevelation() {
         chargeAudio.pause();
-        boomAudio.currentTime = 0;
-        boomAudio.play().catch(()=>{});
+        boomAudio.currentTime = 0; boomAudio.play().catch(()=>{});
 
-        // Hiệu ứng Flash trắng xóa
-        flash.style.opacity = 1;
-        
-        setTimeout(() => {
-            generateAnswer();
-            switchStage('stage-3', 'stage-4');
-            
-            // Tắt Flash và trả lại tốc độ hạt bụi bình thường
+        // SỬA LỖI: Gọi đúng biến flashOverlay
+        if(flashOverlay) {
+            flashOverlay.style.opacity = 1;
             setTimeout(() => {
-                flash.style.opacity = 0;
-                if (window.pJSDom && window.pJSDom[0]) {
-                    window.pJSDom[0].pJS.particles.move.speed = 1;
-                }
-            }, 300);
-        }, 1000); // Đợi 1s trong lúc màn hình trắng để chuyển giao diện
+                generateAnswer();
+                switchStage('stage-4', 'stage-5');
+                let ansEl = document.getElementById('answerText');
+                ansEl.classList.remove('cinematic-reveal');
+                void ansEl.offsetWidth; 
+                ansEl.classList.add('cinematic-reveal');
+                bellAudio.currentTime = 0; bellAudio.play().catch(()=>{});
+                setTimeout(() => { flashOverlay.style.opacity = 0; }, 300);
+            }, 800);
+        }
     }
 
-    // LOGIC TIÊN TRI VÀ ẢO THUẬT GIA
     function generateAnswer() {
         document.getElementById('echoText').textContent = `"${currentQuestion.trim()}"`;
-        let ans = "";
-        let lowerQ = currentQuestion.toLowerCase();
-
-        // 1. CHẾ ĐỘ ẢO THUẬT GIA (Bí mật)
-        if (currentQuestion.endsWith("  ?")) {
-            ans = "LỜI NGUYỀN ĐÃ GIÁNG: KHÔNG!";
-        } else if (currentQuestion.endsWith(" ?")) {
-            ans = "THẦN RA ĐÃ PHÁN QUYẾT: CÓ!";
-        } 
-        // 2. TỪ KHÓA: TÌNH YÊU
-        else if (lowerQ.includes("yêu") || lowerQ.includes("tình") || lowerQ.includes("chia tay") || lowerQ.includes("crush")) {
-            ans = answers.love[Math.floor(Math.random() * answers.love.length)];
-        }
-        // 3. TỪ KHÓA: TIỀN BẠC
-        else if (lowerQ.includes("tiền") || lowerQ.includes("giàu") || lowerQ.includes("trúng") || lowerQ.includes("mua")) {
-            ans = answers.money[Math.floor(Math.random() * answers.money.length)];
-        }
-        // 4. TỪ KHÓA: HÀNH ĐỘNG
-        else if (lowerQ.includes("có nên") || lowerQ.includes("làm không") || lowerQ.includes("đi không")) {
-            ans = answers.action[Math.floor(Math.random() * answers.action.length)];
-        }
-        // 5. MẶC ĐỊNH RANDOM
-        else {
-            ans = answers.general[Math.floor(Math.random() * answers.general.length)];
-        }
-
+        let ans = ""; let lowerQ = currentQuestion.toLowerCase();
+        if (trickResult === 1) ans = "Ánh sáng từ đỉnh Olympus đang soi chiếu, sự thật là điều con mong đợi.";
+        else if (trickResult === -1) ans = "Dòng sông thời gian đang chảy ngược lại với mong muốn của con. Hãy can đảm!";
+        else if (["điểm", "thi", "đỗ", "kiểm tra", "học bạ", "đại học", "trượt", "học"].some(kw => lowerQ.includes(kw))) ans = answers.study[Math.floor(Math.random() * answers.study.length)];
+        else if (["yêu", "tình", "chia tay", "crush"].some(kw => lowerQ.includes(kw))) ans = answers.love[Math.floor(Math.random() * answers.love.length)];
+        else if (["tiền", "giàu", "trúng", "mua"].some(kw => lowerQ.includes(kw))) ans = answers.money[Math.floor(Math.random() * answers.money.length)];
+        else if (["có nên", "làm không", "đi không"].some(kw => lowerQ.includes(kw))) ans = answers.action[Math.floor(Math.random() * answers.action.length)];
+        else ans = answers.general[Math.floor(Math.random() * answers.general.length)];
         document.getElementById('answerText').textContent = ans;
     }
 
-    // Làm lại từ đầu
     function resetRitual() {
         document.getElementById('userQuestion').value = "";
-        switchStage('stage-4', 'stage-2');
+        checkDailyLimit(); switchStage('stage-5', 'stage-1');
+        if (window.pJSDom && window.pJSDom[0]) window.pJSDom[0].pJS.particles.move.speed = 1;
     }
 </script>
-
 </body>
 </html>
