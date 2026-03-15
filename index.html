@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>115 Con Mắt Tiên Tri Của Thần Ra</title>
+    <title>Con Mắt Tiên Tri Của Thần Ra</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -131,7 +131,6 @@
     </div>
 
     <div id="stage-3" class="stage">
-        <h2>Thông Linh Năng Lượng</h2>
         <p>Hãy chọn 3 biểu tượng khi bạn nghĩ đến câu hỏi này.</p>
         <div class="grid-3x3" id="symbolGrid"></div>
         <button class="btn" id="btnConfirmSymbols" onclick="goToOrbPhase()">Gửi lên thần linh</button>
@@ -157,7 +156,7 @@
 <audio id="windAudio" preload="auto" loop><source src="https://files.catbox.moe/cwghfl" type="audio/mpeg"></audio>
 <audio id="chargeAudio" preload="auto" loop><source src="https://files.catbox.moe/hewudh" type="audio/mpeg"></audio>
 <audio id="boomAudio" preload="auto"><source src="https://files.catbox.moe/6cnm50" type="audio/mpeg"></audio>
-<audio id="bellAudio" preload="auto"><source src="https://files.catbox.moe/5ctf8c" type="audio/mpeg"></audio>
+<audio id="bellAudio" preload="auto"><source src="https://files.catbox.moe/5ctf8c.mp3" type="audio/mpeg"></audio>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
@@ -173,7 +172,9 @@
     const nineSymbols =["𓅭", "𓆣", "𓇳", "𓅃", "𓄤", "𓆙", "𓍝", "𓊹", "𓄂"];
 
     const answers = {
-        study:["Thần Trí Tuệ Thoth đang mỉm cười với bài thi của con.", "Ánh sáng rực rỡ từ ngọn đuốc của Nữ thần Athena sẽ dẫn lối cho con.", "Thần Ra ban tặng tia nắng của sự thông suốt vào tâm trí con.", "Con đã nhận được lời chúc phúc từ các nàng Muse, tài năng sẽ thăng hoa.", "Sự kiên trì của con đã lay động lòng thành của các vị thần, thành công đang đến.", "Quyền năng của Hermes sẽ giúp tư duy của con trở nên nhạy bén vô song.", "Con sẽ vượt qua kỳ thi này dễ dàng như cách Apollo điều khiển cỗ xe mặt trời.", "Đền thờ tri thức đang rộng mở đón bước chân chiến thắng của con.", "Các vị thần đang quan sát sự nỗ lực của con, hãy kiên nhẫn.", "Tương lai vẫn còn mờ ảo trong làn sương của nữ thần Isis, hãy hỏi lại sau.", "Cán cân của thần Maat đang thăng bằng, kết quả nằm ở sự tự giác của con.", "Các vị thần cần thấy thêm sự quyết tâm từ phía con trước khi đưa ra lời đáp.", "Tâm hồn con đang xao nhãng, hãy tập trung trở lại trước khi quá muộn.", "Thần Anubis nhắc nhở con cần đặt tâm huyết nặng hơn vào trang sách.", "Cơn thịnh nộ của Poseidon sẽ nổi lên nếu con tiếp tục chủ quan với việc học.", "Kết quả đang ở ranh giới. Chăm chỉ hơn chút nữa sẽ đỗ.", "Các vì sao nói rằng: Phép màu không tự nhiên sinh ra, hãy tự nỗ lực."],
+        nghich:["Thần Maat chỉ dùng cán cân cho sự thật và công lý, không dùng để phán xét ác ý về người khác.", "Đừng dùng lời nói làm vũ khí; nữ thần Aphrodite chỉ ban vẻ đẹp cho những tâm hồn biết yêu thương.", "Lời sấm truyền không được dùng để phán xét người khác. Hãy giữ tâm mình trong sạch.", "Các vị thần từ chối soi sáng những ý nghĩ này.", "Mắt thần Horus nhìn thấu mọi sự thật, nhưng ngài sẽ không chỉ lối cho sự phán xét hay buộc tội."],
+		naughty:["Thần Anubis đang đặt trái tim con lên bàn cân, sự gian dối sẽ khiến con nặng lòng hơn cả một viên đá.", "Cơn thịnh nộ của thần Zeus sẽ giáng xuống nếu con chọn con đường của sự tối tăm và lười biếng.", "Nữ thần Athena không ban trí tuệ cho những kẻ quay lưng với tri thức; hãy tỉnh ngộ trước khi quá muộn.", "Con định đối đầu với định mệnh bằng sự hung hăng sao? Các vị thần chỉ bảo vệ những người có trái tim chính nghĩa.", "Sợi chỉ cuộc đời con đang rối loạn bởi những ý nghĩ nông nổi, hãy dừng lại để không phải hối tiếc về sau."],
+		study:["Thần Trí Tuệ Thoth đang mỉm cười với bài thi của con.", "Ánh sáng rực rỡ từ ngọn đuốc của Nữ thần Athena sẽ dẫn lối cho con.", "Thần Ra ban tặng tia nắng của sự thông suốt vào tâm trí con.", "Con đã nhận được lời chúc phúc từ các nàng Muse, tài năng sẽ thăng hoa.", "Sự kiên trì của con đã lay động lòng thành của các vị thần, thành công đang đến.", "Quyền năng của Hermes sẽ giúp tư duy của con trở nên nhạy bén vô song.", "Con sẽ vượt qua kỳ thi này dễ dàng như cách Apollo điều khiển cỗ xe mặt trời.", "Đền thờ tri thức đang rộng mở đón bước chân chiến thắng của con.", "Các vị thần đang quan sát sự nỗ lực của con, hãy kiên nhẫn.", "Tương lai vẫn còn mờ ảo trong làn sương của nữ thần Isis, hãy hỏi lại sau.", "Cán cân của thần Maat đang thăng bằng, kết quả nằm ở sự tự giác của con.", "Các vị thần cần thấy thêm sự quyết tâm từ phía con trước khi đưa ra lời đáp.", "Tâm hồn con đang xao nhãng, hãy tập trung trở lại trước khi quá muộn.", "Thần Anubis nhắc nhở con cần đặt tâm huyết nặng hơn vào trang sách.", "Cơn thịnh nộ của Poseidon sẽ nổi lên nếu con tiếp tục chủ quan với việc học.", "Kết quả đang ở ranh giới. Chăm chỉ hơn chút nữa sẽ đỗ.", "Các vì sao nói rằng: Phép màu không tự nhiên sinh ra, hãy tự nỗ lực."],
         love:["Mũi tên vàng của thần Eros đã nhắm trúng, trái tim ấy đang hướng về con.", "Nữ thần Aphrodite ban phước cho tình cảm chân thành, một khởi đầu đẹp đang đến.", "Các vì sao báo hiệu một mối lương duyên rực rỡ như ánh bình minh trên đỉnh Olympus.", "Sợi chỉ đỏ của định mệnh đã được buộc chặt, sự chân thành sẽ được đền đáp.", "Trái tim con đã biết rõ câu trả lời, hãy lắng nghe nhịp đập của chính mình.", "Thần Cupid đang mỉm cười nhưng chưa giương cung, hãy kiên nhẫn chờ đợi thêm.", "Làn khói từ đền Delphi còn mờ ảo, tình cảm này cần thêm thời gian để minh chứng.", "Các vị thần đang thử thách lòng kiên trì của con trước khi ban tặng nhân duyên.", "Tình yêu này cần vượt qua một thử thách lớn, hãy chuẩn bị tâm thế vững vàng.", "Đừng để những xúc cảm nhất thời làm mờ mắt, hãy để lý trí dẫn đường như nữ thần Athena.", "Cánh cửa trái tim đang khép hờ, con cần tập trung vào bản thân trước khi tìm kiếm sự gắn kết."],
         money:["Kho báu vĩ đại của các Pharaoh đang chờ đợi con ở phía trước.", "Thần Hermes đang mang đến những cơ hội giao thương đầy hứa hẹn.", "Sự thịnh vượng sẽ đến nếu con kiên nhẫn gieo trồng tri thức từ hôm nay.", "Cỗ xe vàng của thần Helios đang soi sáng con đường tài lộc của con.", "Dòng sông Nile đang trỗi dậy, mang theo phù sa của sự giàu sang và sung túc.", "Cán cân của thần Maat đang xem xét sự nỗ lực của con, hãy cân nhắc kỹ.", "Đồng tiền vàng đang xoay giữa không trung, kết quả phụ thuộc vào quyết định sắp tới.", "Sự giàu có không chỉ nằm ở túi tiền, hãy tích lũy thêm giá trị cho bản thân.", "Làn sương mờ đang che khuất kho báu, hãy kiên nhẫn đợi thời cơ chín muồi.", "Hãy cẩn trọng, con quái vật của lòng tham có thể nuốt chửng thành quả của con.", "Thần Tài không mỉm cười trong sự việc này, hãy giữ chặt những gì đang có.", "Cánh cửa hầm vàng đang khép lại, con cần một kế hoạch khôn ngoan hơn."],
         action:["Hãy tiến lên, các vị thần đang hậu thuẫn phía sau lưng con!", "Làm ngay đi trước khi cơ hội vụt mất khỏi tầm tay như gió thoảng.", "Cánh buồm của con đang thuận gió, hãy ra khơi để chinh phục đỉnh cao mới.", "Mọi dấu hiệu trên đỉnh Olympus đều cho thấy đây là thời điểm vàng để hành động.", "Con đã chuẩn bị đủ lâu rồi, hãy bước tới và khẳng định bản lĩnh của mình.", "Sự vội vàng có thể làm đổ vỡ chén thánh, hãy tĩnh tâm quan sát thêm.", "Cán cân đang ở trạng thái cân bằng, hành động hay dừng lại đều do con quyết định.", "Hãy tung đồng xu của thần Hermes, định mệnh đang chờ một sự ngẫu nhiên.", "Các vị thần chưa tiết lộ lối đi, hãy hỏi lại khi tâm trí con thanh thản hơn.", "Chưa phải lúc, hãy lùi lại một bước để nhìn rõ toàn cảnh bức tranh.", "Suy nghĩ thật kỹ, con đường này đầy chông gai và cạm bẫy.", "Linh tính từ đền thờ báo hiệu một sự bất an, hãy tạm dừng hành động này lại."],
@@ -390,6 +391,8 @@
         let ans = ""; let lowerQ = currentQuestion.toLowerCase();
         if (trickResult === 1) ans = "Ánh sáng từ đỉnh Olympus đang soi chiếu, sự thật là điều con mong đợi.";
         else if (trickResult === -1) ans = "Dòng sông thời gian đang chảy ngược lại với mong muốn của con. Hãy can đảm!";
+		else if (["ăn trộm", "ăn cắp", "điên", "khùng", "ngu", "xấu xí", "đồ tồi", "đồ xấu", "bị hâm", "lấy trộm", "thiểu năng", "tăng động"].some(kw => lowerQ.includes(kw))) ans = answers.nghich[Math.floor(Math.random() * answers.nghich.length)];
+		else if (["bỏ học", "trốn học", "đánh nhau", "gian lận", "bùng học","tự tử","nhảy lầu","hút"].some(kw => lowerQ.includes(kw))) ans = answers.naughty[Math.floor(Math.random() * answers.naughty.length)];
         else if (["điểm", "thi", "đỗ", "kiểm tra", "học bạ", "đại học", "trượt", "học"].some(kw => lowerQ.includes(kw))) ans = answers.study[Math.floor(Math.random() * answers.study.length)];
         else if (["yêu", "tình", "chia tay", "crush"].some(kw => lowerQ.includes(kw))) ans = answers.love[Math.floor(Math.random() * answers.love.length)];
         else if (["tiền", "giàu", "trúng", "mua"].some(kw => lowerQ.includes(kw))) ans = answers.money[Math.floor(Math.random() * answers.money.length)];
